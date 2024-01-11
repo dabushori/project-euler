@@ -1,7 +1,9 @@
 from math import ceil
 from itertools import count
+from functools import cache
 
 
+@cache
 def is_prime(number: int) -> bool:
     return all(number % factor != 0 for factor in range(2, ceil(number ** 0.5 + 1))) if number >= 2 else False
 
