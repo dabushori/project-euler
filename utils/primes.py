@@ -22,3 +22,16 @@ def get_first_n_primes(n: int):
         if is_prime(candidate):
             primes_found += 1
             yield candidate
+
+
+def prime_numbers_until(number: int):
+    if number < 2:
+        return
+    # This array marks 2, ..., number
+    numbers = [False] * (number - 1)
+    for candidate in range(2, number + 1):
+        candidate_index = candidate - 2
+        if not numbers[candidate_index]:
+            yield candidate
+            for index_to_mark in range(candidate_index, len(numbers), candidate):
+                numbers[index_to_mark] = True
