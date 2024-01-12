@@ -1,11 +1,11 @@
-from math import ceil
+from math import floor
 from itertools import count
 from functools import cache
 
 
 @cache
 def is_prime(number: int) -> bool:
-    return all(number % factor != 0 for factor in range(2, ceil(number ** 0.5 + 1))) if number >= 2 else False
+    return all(number % factor != 0 for factor in range(2, floor(number ** 0.5) + 1)) if number >= 2 else False
 
 
 def get_prime_factors(number):
@@ -37,3 +37,9 @@ def prime_numbers_until(number: int):
             yield candidate
             for index_to_mark in range(candidate_index, len(numbers), candidate):
                 numbers[index_to_mark] = True
+
+
+def get_prime_numbers():
+    for candidate in count(start=2):
+        if is_prime(candidate):
+            yield candidate
