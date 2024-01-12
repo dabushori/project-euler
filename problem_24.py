@@ -23,7 +23,6 @@ def get_nth_lexicographic_permutation(n: int, digits: list[str]):
     reminder = n % factorial(len(digits) - 1)
     first_digit = digits[first_digit_index]
     new_digits = digits[:first_digit_index] + digits[first_digit_index + 1:]
-    print(first_digit, reminder, first_digit)
     return first_digit + get_nth_lexicographic_permutation(reminder, new_digits)
 
 
