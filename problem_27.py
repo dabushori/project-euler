@@ -5,7 +5,7 @@ Challenge 27 of project euler - Quadratic Primes
 """
 
 from math import inf
-from utils.primes import prime_numbers_until, is_prime
+from utils.primes import prime_numbers_until_with_space, is_prime
 from itertools import count
 
 
@@ -35,8 +35,8 @@ def solve():
     """
     max_prime_count = -inf
     result = None
-    for b in prime_numbers_until(B_MAX):
-        for a_plus_b_plus_1 in prime_numbers_until(1 + A_MAX + B_MAX):
+    for b in prime_numbers_until_with_space(B_MAX):
+        for a_plus_b_plus_1 in prime_numbers_until_with_space(1 + A_MAX + B_MAX):
             a = a_plus_b_plus_1 - 1 - b
             current_prime_count = calculate_number_of_primes(a, b)
             if current_prime_count > max_prime_count:

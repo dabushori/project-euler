@@ -4,11 +4,11 @@ Challenge 35 of project euler - Circular Primes
 @author Ori Dabush
 """
 
-from utils.primes import prime_numbers_until
+from utils.primes import prime_numbers_until_with_space
 
 
 UPPER_LIMIT = 1_000_000
-PRIMES_UNTIL_LIMIT = set(prime_numbers_until(UPPER_LIMIT))
+PRIMES_UNTIL_LIMIT = set(prime_numbers_until_with_space(UPPER_LIMIT))
 
 
 def is_circular_prime(number: int) -> bool:

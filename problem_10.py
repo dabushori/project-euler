@@ -3,14 +3,14 @@ Challenge 10 of project euler - Summation of Primes
 
 @author Ori Dabush
 """
-from utils.primes import prime_numbers_until
+from utils.primes import prime_numbers_until_with_space
 
 
 UPPER_LIMIT = 2_000_000
 
 
 def solve():
-    return sum(prime_numbers_until(UPPER_LIMIT))
+    return sum(prime_numbers_until_with_space(UPPER_LIMIT))
 
 
 def main():

@@ -26,7 +26,10 @@ def get_first_n_primes(n: int):
             yield candidate
 
 
-def prime_numbers_until(number: int):
+def prime_numbers_until_with_space(number: int):
+    """
+    This function uses Sieve of Eratosthenes which requires an array of number's length
+    """
     if number < 2:
         return
     # This array marks 2, ..., number
@@ -37,6 +40,15 @@ def prime_numbers_until(number: int):
             yield candidate
             for index_to_mark in range(candidate_index, len(numbers), candidate):
                 numbers[index_to_mark] = True
+
+
+def prime_numbers_until_no_space(upper_limit: int):
+    """
+    This function doesn't use any array, but it takes more time
+    """
+    for candidate in range(2, upper_limit + 1):
+        if is_prime(candidate):
+            yield candidate
 
 
 def get_prime_numbers():
