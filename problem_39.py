@@ -20,7 +20,6 @@ def find_number_of_solutions(perimeter: int) -> int:
             if c != float(int(c)):
                 continue
             if a + b + c == perimeter:
-                print(perimeter, a, b, c)
                 count += 1
     return count
 
