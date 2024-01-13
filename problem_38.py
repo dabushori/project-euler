@@ -5,16 +5,11 @@ Challenge 38 of project euler - Pandigital Multiples
 """
 
 from itertools import count
+from utils.pandigitals import is_one_to_nine_pandigital
 
 
-DIGITS = set(map(str, range(1, 10)))
 PRODUCT_UPPER_LIMIT = 10 ** 9
 MULTIPLICAND_UPPER_LIMIT = 10 ** 4
-
-
-def is_one_to_nine_pandigital_number(number: int) -> bool:
-    number = str(number)
-    return len(number) == len(DIGITS) and set(number) == DIGITS
 
 
 def calculate_concatenated_product(number: int, n: int) -> int:
@@ -32,7 +27,7 @@ def solve():
             product = calculate_concatenated_product(multiplicand, n)
             if product >= PRODUCT_UPPER_LIMIT:
                 break
-            if is_one_to_nine_pandigital_number(product):
+            if is_one_to_nine_pandigital(product):
                 max_result = max(max_result, product)
     return max_result
 

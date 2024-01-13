@@ -5,14 +5,10 @@ Challenge 32 of project euler - Pandigital Products
 """
 
 from utils.divisors import get_divisors
+from utils.pandigitals import is_one_to_nine_pandigital
 
 
 PRODUCT_UPPER_LIMIT = 10 ** 7
-DIGITS = set(map(str, range(1, 10)))
-
-
-def is_pandigital(string: str):
-    return len(string) == len(DIGITS) and set(string) == DIGITS
 
 
 def solve():
@@ -26,7 +22,7 @@ def solve():
             continue
         for multiplicand in get_divisors(product):
             multiplier = product // multiplicand
-            if is_pandigital(f"{multiplicand}{multiplier}{product}"):
+            if is_one_to_nine_pandigital(f"{multiplicand}{multiplier}{product}"):
                 result += product
                 break
     return result
