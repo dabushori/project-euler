@@ -52,7 +52,7 @@ def prime_numbers_until_no_space(upper_limit: int):
             yield candidate
 
 
-def get_prime_numbers():
-    for candidate in count(start=2):
+def get_prime_numbers(start: int = 2):
+    for candidate in count(start=start):
         if is_prime(candidate):
             yield candidate
