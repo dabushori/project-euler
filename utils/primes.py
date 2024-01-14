@@ -8,7 +8,8 @@ def is_prime(number: int) -> bool:
     return all(number % factor != 0 for factor in range(2, floor(number ** 0.5) + 1)) if number >= 2 else False
 
 
-def get_prime_factors(number):
+@cache
+def get_prime_factors(number: int):
     if number == 1:
         return []
     for candidate in range(2, number + 1):
