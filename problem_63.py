@@ -17,13 +17,17 @@ def number_of_digits(number: int) -> int:
 
 def solve():
     """
-    We need to find the number of pairs (x, n) where x**n has n digits. That condition holds only if:
-    ceil(log10(x ** n)) == n <=> ceil(n * log10(x)) == n <=> ceil(log10(x)) == 1 <=> x is in (1, 10].
-    So we can iterate on n's value until x**n has less than n digits and that's it
-    (it is enough because if the power will be raised by 1 where the base is in (1, 10] the number of digits of the
-    result will be incremented by at most 1).
-    In addition, 10**n will always have n+1 digits so the condition will never hold for it.
-    Another x value we should consider is 1, which for every n the condition will be held.
+    We need to find the number of pairs (x, n) where x**n has n digits.
+    For every x >= 10, increasing n by one means adding at least one digit because it multiplies the number by x
+    which is greater or equal to 10. Because in the first place the number of digits is greater than n (there are at
+    least 2 digits when n = 1), the number of digits will always be greater than n.
+
+    We left with x can be only in the range [1, 9]. we can iterate on n until the number of digits is less than n,
+    because from that point and on the number of digits will always be less than n similarly to before (increasing n
+    by one means adding at most one digit because it multiplies by a number less than 10).
+
+    1 is special because for every n the result will be 1 and the loop won't stop, so we can consider it as only 1
+    number by initializing the counter to 1.
     """
     result = 1
     for x in range(X_MIN, X_MAX + 1):
