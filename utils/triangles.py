@@ -20,14 +20,14 @@ def get_triangle_number(n: int) -> int:
     return n * (n + 1) // 2
 
 
+def get_triangle_numbers(start: int = 1, end: int | None = None, indexed: bool = False):
+    generator = range(start, end) if end is not None else count(start=start)
+    for n in generator:
+        yield (n, get_triangle_number(n)) if indexed else get_triangle_number(n)
+
+
 def get_triangle_numbers_until(upper_limit: int):
-    for n in count(start=0):
-        number = get_triangle_number(n)
+    for number in get_triangle_numbers():
         if number > upper_limit:
             break
         yield number
-
-
-def get_triangle_numbers(start: int):
-    for n in count(start=start):
-        yield get_triangle_number(n)
