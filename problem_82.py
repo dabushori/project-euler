@@ -17,7 +17,8 @@ class Direction(IntEnum):
 
 
 @cache
-def find_minimal_path_sum_inner(matrix: tuple[tuple[int]], row: int, column: int, last_direction: Direction = Direction.NONE) -> int:
+def find_minimal_path_sum_inner(matrix: tuple[tuple[int]], row: int, column: int,
+                                last_direction: Direction = Direction.NONE) -> int:
     rows = len(matrix)
     columns = len(matrix[0])
     current_tile = matrix[row][column]

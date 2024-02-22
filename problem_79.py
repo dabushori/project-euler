@@ -7,7 +7,7 @@ Challenge 79 of project euler - Passcode Derivation
 from utils.inputs import get_input
 
 
-def get_relations(attempts: list[str]) -> set[tuple[str, str]]:
+def get_relations(attempts: list[str]) -> list[tuple[str, str]]:
     """
     Find all the relations between digits
     """
@@ -28,7 +28,6 @@ def get_relations(attempts: list[str]) -> set[tuple[str, str]]:
             if relations_dict[current_digit] <= relations_dict[digit]:
                 break
             relations_dict[digit].update(relations_dict[current_digit])
-            current_digit = relations_dict[current_digit]
     return [(x, y) for x in relations_dict for y in relations_dict[x]]
 
 
@@ -46,7 +45,7 @@ def solve():
         smaller_digits = [x for x, y in relations if y == digit if x not in result]
         result = result + ''.join(smaller_digits) + digit
         relations = [(x, y) for x, y in relations if y != digit]
-        print(result)
+    return result
 
 
 def main():

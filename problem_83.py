@@ -10,7 +10,7 @@ from math import inf
 from collections import defaultdict
 
 
-def find_minimal_path_sum(matrix: tuple[tuple[int]]) -> int:
+def find_minimal_path_sum(matrix: tuple[tuple[int, ...], ...]) -> int:
     """
     An implementation of Dijkstra's algorithm to the shortest path problem.
     The nodes are the matrix tiles and the weight of an edge from m[i,j] to m[k,l] is the value of m[k,l].
@@ -39,7 +39,7 @@ def find_minimal_path_sum(matrix: tuple[tuple[int]]) -> int:
         if column < columns - 1:
             neighbor = (row, column + 1)
             distances[neighbor] = min(distances[neighbor], distances[current_node] + matrix[row][column + 1])
-    return distances[target_node]
+    return int(distances[target_node])
 
 
 def solve():
