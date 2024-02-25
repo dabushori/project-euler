@@ -12,6 +12,8 @@ def is_prime(number: int) -> bool:
 def get_prime_factors(number: int):
     if number == 1:
         return []
+    if is_prime(number):
+        return [number]
     for candidate in range(2, number + 1):
         if is_prime(candidate) and number % candidate == 0:
             return [candidate] + get_prime_factors(number // candidate)
