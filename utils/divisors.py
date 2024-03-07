@@ -1,6 +1,8 @@
 from math import floor
+from functools import cache
 
 
+@cache
 def get_divisors(number: int):
     if number <= 0:
         raise ValueError('Invalid number')
