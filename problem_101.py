@@ -33,7 +33,7 @@ def find_fit(degree):
         op_value = np.dot(op, [n ** i for i in range(degree)])
         real_value = u(n)
         if op_value != real_value:
-            return op_value
+            return int(op_value)
     raise Exception("Hasn't found FIT")
 
 
