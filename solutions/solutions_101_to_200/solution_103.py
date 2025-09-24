@@ -4,7 +4,9 @@ Challenge 103 of project euler - Special Subset Sums: Optimum
 @author Ori Dabush
 """
 
-from itertools import chain, combinations, count
+from itertools import combinations
+from solutions.utils.special_sum_set import is_special_sum_set
+import math
 
 KNOWN_SETS = {
     1: {1},
@@ -15,45 +17,40 @@ KNOWN_SETS = {
     6: {11, 18, 19, 20, 22, 25},
 }
 
-def powerset(iterable):
-    "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
-    s = list(iterable)
-    return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
+def calculate_next_special_sum_set(s):
+    first = sorted(s)[math.floor(len(s) / 2)]
+    return {first} | {first + x for x in s}
 
-def check_first_condition(b, c):
-    return sum(b) != sum(c)
+N = 7
+SUM_OPTIMUM_SET_FOR_N_MINUS_1 = sum(KNOWN_SETS[N - 1])
 
-def check_second_condition(b, c):
-    if len(b) > len(c):
-        return sum(b) > sum(c)
-    elif len(b) < len(c):
-        return sum(b) < sum(c)
-    return True
-
-def is_special_sum_set(s):
-    current_subsets = list(powerset(s))
-    for b in list(powerset(s)):
-        for c in current_subsets:
-            if 0 in (len(b), len(c)) or (set(b) & set(c)):
-                continue
-            if not check_first_condition(b, c) or not check_second_condition(b, c):
-                return False
-        current_subsets.remove(b)
-    return True
-
-N = 6
+# The maximum element in the optimum set is assumed to be up to 5 more than the maximum element in the set that the algorithm created
+SAFETY_FACTOR = 5
 
 def solve():
-    numbers_until_now = list(range(1, 13))
-    for number in count(start=max(numbers_until_now) + 1):
-        # print(f'{numbers_until_now = }')
+    """
+    This challange is very weird, but I solved it by using their algorithm and hueristicly verifying that this was the
+    optimum set.
+    It takes some time to verify, but it works (it can be improved using the solution of problem 106).
+    """
+    best_set_found = calculate_next_special_sum_set(KNOWN_SETS[N - 1])
+    best_sum_found = sum(best_set_found)
+    # We assume that the minimal element will be at least the minimum value of the set that the algorithm created
+    start = 1
+    end = start + N
+    numbers_until_now = list(range(start, end))
+    for number in range(max(numbers_until_now) + 1, max(best_set_found) + SAFETY_FACTOR + 1):
         for current_set in combinations(numbers_until_now, N - 1):
-            current_set = sorted(set(current_set) | {number})
+            current_set = set(current_set) | {number}
+            sum_current_set = sum(current_set)
+            if sum_current_set >= best_sum_found or sum_current_set <= SUM_OPTIMUM_SET_FOR_N_MINUS_1:
+                continue
             if is_special_sum_set(current_set):
-                return ''.join(str(n) for n in current_set)
+                if sum_current_set < best_sum_found:
+                    best_set_found = current_set
+                    best_sum_found = sum(best_set_found)
         numbers_until_now.append(number)
-
-
+    return ''.join(map(str, sorted(best_set_found)))
 
 def main():
     print(f'The answer is {solve()}')
