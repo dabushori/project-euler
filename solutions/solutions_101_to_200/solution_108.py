@@ -1,59 +1,54 @@
 """
-Challenge 108 of project euler - Diophantine Reciprocals I
+Challenge 110 of project euler - Diophantine Reciprocals II
 
 @author Ori Dabush
 """
 
-from itertools import count
-
-MIN_SOLUTIONS = 1000
-
-
-"""
-1/x + 1/y = 1/n
-(x+y)/xy = 1/n
-ny + nx = xy
-n = xy/(x+y)
-
-1/y = 1/n - 1/x = (x - n) / xn
-y = xn / (x - n)
+from math import prod, inf
+from solutions.utils.primes import get_first_n_primes
 
 
-
-1/x + 1/y = 1/n
-(x+y)/xy=1/n
-n=xy/(x+y)
-
-We know that:
-x|yn
-y|xn
-n|xy
-"""
+TARGET_VALUE = 1000
 
 
-def count_distinct_solutions(n: int) -> int:
+def number_of_solutions(powers):
+    return (prod(2 * p + 1 for p in powers) + 1) // 2
+
+
+def n_from_prime_factors(powers):
     """
-    Count distinct solutions to 1/x + 1/y = 1/n, where x, y and n are positive integers.
+    Calculate the minimal number which can be created using the given primes factors (assuming they are
+    sorted in decreasing order).
+
+    This function will take the first `len(powers)` prime numbers and will calculate the value of n.
     """
-    distinct_solutions = 0
-    min_possible_x, max_possible_x = n + 1, 2 * n
-    print(f'The value of n is {n}')
-    for x in range(min_possible_x, max_possible_x + 1):
-        y_n, y_d = x*n, x-n
-        if y_n % y_d == 0: 
-            distinct_solutions += 1
-            print(f'1 / {x} + 1 / {y_n//y_d} = 1 / {n}')
-    return distinct_solutions
+    primes = get_first_n_primes(len(powers))
+    return prod((base ** power) for base, power in zip(primes, powers))
 
 
 def solve():
-    for n in count(1):
-        distinct_solutions = count_distinct_solutions(n)
-        if n % 1000 == 0:
-            print(f'{n}: {distinct_solutions}')
-        if distinct_solutions > MIN_SOLUTIONS:
-            return n
-
+    """
+    Read more about this algorithm in solution_110.py.
+    """
+    queue = [[0]]
+    minimal_number_found = inf
+    while queue:
+        powers = queue.pop(0)
+        number = n_from_prime_factors(powers)
+        if number >= minimal_number_found:
+            continue
+        if number_of_solutions(powers) > TARGET_VALUE:
+            # If we reached the target value, check if this is the minimal value
+            minimal_number_found = min(minimal_number_found, number)
+        else:
+            # Now, we can add one to the current power
+            new_powers = powers.copy()
+            if len(new_powers) == 1 or new_powers[-2] >= new_powers[-1] + 1:
+                new_powers.append(new_powers.pop() + 1)
+                queue.append(new_powers)
+            # Or we can add a new power
+            queue.append(powers.copy() + [1])
+    return minimal_number_found
 
 def main():
     print(f'The answer is {solve()}')
